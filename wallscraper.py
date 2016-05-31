@@ -152,9 +152,9 @@ def main():
     Gets subredditjson data from the wallscraperutils query method and
     then goes through each one and downloads the post if possible.
     """
-    if os.path.exists('/Users/yhindy/Google Drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers'):
-        shutil.rmtree(
-        '/Users/yhindy/Google Drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers')
+    if os.path.exists('/wallpapers'):
+    	shutil.rmtree('/wallpapers')
+    	
     """ Since this script only runs once a week, 
     it should dump the old wallpapers and download new ones """
     subredditjson = utils.query(sys.argv[1])
