@@ -1,3 +1,5 @@
+NB: THIS IS AN ASSIGNMENT FOR CS41 WRITTEN BY @sredmond. THIS README OUTLINES THE SPEC FOR THE CODE
+
 # Assignment 3: Wallscraper
 
 ## Congratulations!
