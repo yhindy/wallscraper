@@ -73,7 +73,7 @@ class RedditPost:
             return
         if self.isalbum:
             print("Dont know how to download albums yet!!!")
-            return
+            return -1
         if self.url[-3:] != 'jpg' or self.url[-3:] != 'png':
             self.url = self.url + ".jpg"
         if self.ispic:
@@ -92,14 +92,15 @@ class RedditPost:
             with open(finalpath, 'wb') as f:
                 for chunk in r:
                     f.write(chunk)
-        pass
+        
+        return 0
 
     def findPath(self):
         """
         This method returns where in the local directory the
         image should be stored. Images are stored as "{id}.{imagetype}"
         """
-        pathname = '/Users/yhindy/Google Drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers/'
+        pathname = '/Users/yhindy/drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers/'
         pathname = pathname + \
             str(self.aspectratio.numerator) + 'x' + \
             str(self.aspectratio.denominator) + "/"
@@ -120,23 +121,23 @@ def findBest(posts):
     This function takes in a list of RedditPost objects and returns the one with
     the most upvotes
     """
-    posts = [post for post in posts if not post.isalbum or not post.is_self]
+    posts = [post for post in posts if post.ispic]
     bestpost = max(posts, key=lambda p: p.score)
     return bestpost
 
 
 def downloadBest(post):
     if os.path.exists('wallpapers/best'):
-        shutil.rmtree(
-            '/Users/yhindy/Google Drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers/best')
-    if post.url[-3:] != 'jpg' or post.url[-3:] != 'png':
+        shutil.rmtree('wallpapers/best')
+    if post.url[-3:] != 'jpg' and post.url[-3:] != 'png':
         post.url = post.url + ".jpg"
-    pathname = '/Users/yhindy/Google Drive/Freshman Year/Spring/CS41/python-assignments/assign3/wallpapers/best/'
+    pathname = 'wallpapers/best/'
     finalpath = pathname + 'best.jpg'
 
     r = requests.get(post.url, headers={
                      'User-Agent': 'Wallscraper Script by yhindy'})
 
+    print(r.status_code)
     if r.ok:
         if not os.path.exists(pathname):
             os.makedirs(pathname)
@@ -166,6 +167,7 @@ def main():
 
         best = findBest(posts)
         downloadBest(best)
+
 
     pass
 
